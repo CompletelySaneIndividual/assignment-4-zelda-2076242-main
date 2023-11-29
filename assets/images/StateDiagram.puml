@@ -1,0 +1,36 @@
+@startuml
+
+hide empty description
+skinparam monochrome true
+
+state "PlayerSwordSwingingState" as PSSS
+state "PlayerIdlingState" as PIS
+state "PlayerWalkingState" as PWS
+state "PlayerLiftingState" as PLS
+state "PlayerCarryingState" as PCS
+state "PlayerCarryIdlingState" as PCIS
+state "PlayerThrowingState" as PTS
+state KeyPressChoice1 <<choice>>
+state KeyPressChoice2 <<choice>>
+
+[*] --> PIS
+
+PIS --> KeyPressChoice1 : Press key
+KeyPressChoice1 --> PSSS : Spacebar
+KeyPressChoice1 --> PWS : w/a/s/d
+KeyPressChoice1 --> PLS : Enter
+
+PWS -> PSSS : Spacebar
+PSSS -> PIS : Animation finishes
+PWS -> PIS : \nNothing pressed
+
+PLS -> PCIS : Animation finishes
+
+PCIS --> KeyPressChoice2 : Press key
+KeyPressChoice2 --> PCS : w/a/s/d
+KeyPressChoice2 --> PTS : Enter
+
+PCS -> PCIS : Nothing pressed
+PTS -> PIS : Animation\nfinishes
+
+@enduml
